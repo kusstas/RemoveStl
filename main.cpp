@@ -13,11 +13,12 @@ void taskMapRemove();
 int main(int argc, char *argv[])
 {
     srand(time(0));
-    QCoreApplication a(argc, argv);
-
+    cout << endl << "--------------------------VECTOR------------------------" << endl;
     taskVectorRemove();
-
-    return a.exec();
+    cout << endl << "--------------------------MAP------------------------" << endl;
+    taskMapRemove();
+    cout << endl;
+    return 0;
 }
 
 void taskVectorRemove()
@@ -34,7 +35,7 @@ void taskVectorRemove()
         cout << i << ' ';
     }
 
-    cout << endl << "----------------------------------------------------------" << endl;
+    cout << endl << "---------------------------REMOVE 8----------------------------" << endl;
 
     array.erase(remove(array.begin(), array.end(), 8), array.end());
 
@@ -43,7 +44,7 @@ void taskVectorRemove()
     }
 }
 
-void taskMapsRemove()
+void taskMapRemove()
 {
     map<int, int> dict;
 
@@ -55,11 +56,20 @@ void taskMapsRemove()
         cout << i.second << ' ';
     }
 
-    cout << endl << "----------------------------------------------------------" << endl;
+    cout << endl << "---------------------------REMOVE 8----------------------------" << endl;
 
-    dict.erase(remove(farray.begin(), array.end(), 8), array.end());
+    auto it = dict.begin();
+    while (it != dict.end()) {
+        if (it->second == 8) {
+            dict.erase(it++);
+        }
+        else {
+            ++it;
+        }
 
-//    for (auto i : array) {
-//        cout << i << ' ';
-//    }
+    }
+
+    for (auto i : dict) {
+        cout << i.second << ' ';
+    }
 }
