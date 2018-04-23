@@ -1,18 +1,25 @@
 #include <QCoreApplication>
+
+#include <iostream>
+
+#include <algorithm>
 #include <vector>
 #include <map>
-#include <iostream>
+
 #include <random>
-#include <time.h>
 
 using namespace std;
+
+const int MIN_VALUE     = 1;
+const int MAX_VALUE     = 10;
+const int TARGET_REMOVE = 8;
+const int COUNT_NUMBERS = 100;
 
 void taskVectorRemove();
 void taskMapRemove();
 
-int main(int argc, char *argv[])
+int main()
 {
-    srand(time(0));
     cout << endl << "--------------------------VECTOR------------------------" << endl;
     taskVectorRemove();
     cout << endl << "--------------------------MAP------------------------" << endl;
@@ -23,53 +30,56 @@ int main(int argc, char *argv[])
 
 void taskVectorRemove()
 {
-    vector<int> array;
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> dis(MIN_VALUE, MAX_VALUE);
+    vector<int> array(COUNT_NUMBERS);
 
-    array.reserve(100);
-
-    for (int i = 0; i < 100; i++) {
-        array.push_back(rand() % 10);
+    for (auto& el : array) {
+        el = dis(gen);
     }
 
-    for (auto i : array) {
-        cout << i << ' ';
+    for (const auto& el : array) {
+        cout << el << ' ';
     }
 
-    cout << endl << "---------------------------REMOVE 8----------------------------" << endl;
+    cout << endl << "---------------------------REMOVE----------------------------" << endl;
 
-    array.erase(remove(array.begin(), array.end(), 8), array.end());
+    array.erase(remove(array.begin(), array.end(), TARGET_REMOVE), array.end());
 
-    for (auto i : array) {
-        cout << i << ' ';
+    for (const auto& el : array) {
+        cout << el << ' ';
     }
 }
 
 void taskMapRemove()
 {
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> dis(MIN_VALUE, MAX_VALUE);
     map<int, int> dict;
 
-    for (int i = 0; i < 100; i++) {
-        dict[i] = rand() % 10;
+    for (int i = 0; i < COUNT_NUMBERS; i++) {
+        dict[i] = dis(gen);
     }
 
-    for (auto i : dict) {
-        cout << i.second << ' ';
+    for (const auto& el : dict) {
+        cout << el.second << ' ';
     }
 
-    cout << endl << "---------------------------REMOVE 8----------------------------" << endl;
+    cout << endl << "---------------------------REMOVE----------------------------" << endl;
 
     auto it = dict.begin();
     while (it != dict.end()) {
-        if (it->second == 8) {
-            dict.erase(it++);
+        if (it->second == TARGET_REMOVE) {
+            it = dict.erase(it);
         }
         else {
             ++it;
         }
-
     }
 
-    for (auto i : dict) {
-        cout << i.second << ' ';
+    for (const auto& el : dict) {
+        cout << el.second << ' ';
     }
 }
